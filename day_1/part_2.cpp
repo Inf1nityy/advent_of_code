@@ -1,19 +1,9 @@
+#include <algorithm>
 #include <cstdlib>
 #include <iostream>
 #include <fstream>
 #include <ostream>
 #include <vector>
-
-int getNumberOfRepeats(std::vector<int> vector, int element) {
-    int repeating = 0;
-    for (int integer : vector) {
-        if (integer == element) {
-            repeating++;
-        }
-    }
-
-    return repeating;
-}
 
 int main() {
     std::ifstream puzzle_input;
@@ -30,7 +20,7 @@ int main() {
 
     int similarityScore = 0;
     for (int i = 0; i < first_row.size(); i++) {
-        similarityScore += first_row[i] * getNumberOfRepeats(second_row, first_row[i]);
+        similarityScore += first_row[i] * std::count(second_row.begin(), second_row.end(), first_row[i]);
     }
 
     std::cout << similarityScore << std::endl;
