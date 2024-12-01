@@ -1,40 +1,29 @@
+#include <algorithm>
+#include <cstdlib>
 #include <iostream>
 #include <fstream>
-#include <list>
+#include <ostream>
+#include <vector>
 
-int get_calibration_value(std::string line) {
-    int first_digit = 69;
-    int second_digit;
+int main() {
+    std::ifstream puzzle_input;
+    puzzle_input.open("puzzle_input.txt");
 
-    for (char character : line) {
-        if (std::isdigit(character)) {
-            if (first_digit == 69) {
-                first_digit = int(character - 48);
-                second_digit = first_digit;
-            } else {
-                second_digit = int(character - 48);
-            }
-        }
+    std::vector<int> first_row;
+    std::vector<int> second_row;
+
+    int a, b;
+    while (puzzle_input >> a >> b) {
+        first_row.push_back(a);
+        second_row.push_back(b);
     }
 
-    return first_digit * 10 + second_digit;
-}
-
-int main(void) {
-    std::string line;
-    std::ifstream puzzle_input("puzzle_input.txt");
-    std::list<int> numbers = {};
-
-    if (puzzle_input.is_open()) {
-        while (std::getline(puzzle_input, line)) {
-            numbers.push_back(get_calibration_value(line));
-        }
-        puzzle_input.close();
-    }
+    std::sort(first_row.begin(), first_row.end());
+    std::sort(second_row.begin(), second_row.end());
 
     int sum = 0;
-    for (int number : numbers) {
-        sum += number;
+    for (int i = 0; i < first_row.size(); i++) {
+        sum += abs(first_row[i] - second_row[i]);
     }
 
     std::cout << sum << std::endl;

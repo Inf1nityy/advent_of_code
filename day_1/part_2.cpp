@@ -1,63 +1,38 @@
+#include <cstdlib>
 #include <iostream>
 #include <fstream>
-#include <list>
-#include <unordered_map>
+#include <ostream>
+#include <vector>
 
-int get_calibration_value(std::string line) {
-    std::unordered_map<std::string, std::string> numbers = {
-        {"one", "1"},
-        {"two", "2"},
-        {"three", "3"},
-        {"four", "4"},
-        {"five", "5"},
-        {"six", "6"},
-        {"seven", "7"},
-        {"eight", "8"},
-        {"nine", "9"}
-    };
-
-    for (auto number : numbers) {
-        while (line.find(number.first) != std::string::npos) {
-            line.replace(line.find(number.first) + 1, 1, number.second);
+int getNumberOfRepeats(std::vector<int> vector, int element) {
+    int repeating = 0;
+    for (int integer : vector) {
+        if (integer == element) {
+            repeating++;
         }
     }
 
-    std::cout << line << std::endl;
-
-    int first_digit = 69;
-    int second_digit;
-
-    for (char character : line) {
-        if (std::isdigit(character)) {
-            if (first_digit == 69) {
-                first_digit = int(character - 48);
-                second_digit = first_digit;
-            } else {
-                second_digit = int(character - 48);
-            }
-        }
-    }
-
-    return first_digit * 10 + second_digit;
+    return repeating;
 }
 
-int main(void) {
-    std::string line;
-    std::ifstream puzzle_input("puzzle_input.txt");
-    std::list<int> numbers = {};
+int main() {
+    std::ifstream puzzle_input;
+    puzzle_input.open("puzzle_input.txt");
 
-    if (puzzle_input.is_open()) {
-        while (std::getline(puzzle_input, line)) {
-            std::cout << get_calibration_value(line) << std::endl;
-            numbers.push_back(get_calibration_value(line));
-        }
-        puzzle_input.close();
+    std::vector<int> first_row;
+    std::vector<int> second_row;
+
+    int a, b;
+    while (puzzle_input >> a >> b) {
+        first_row.push_back(a);
+        second_row.push_back(b);
     }
 
-    int sum = 0;
-    for (int number : numbers) {
-        sum += number;
+    int similarityScore = 0;
+    for (int i = 0; i < first_row.size(); i++) {
+        similarityScore += first_row[i] * getNumberOfRepeats(second_row, first_row[i]);
     }
 
-    std::cout << sum << std::endl;
+    std::cout << similarityScore << std::endl;
 }
+
