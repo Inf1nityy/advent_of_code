@@ -58,6 +58,9 @@ int main() {
                 Antenna antennaOne = matchingAntennas[i];
                 Antenna antennaTwo = matchingAntennas[j];
 
+                uniqueAntinodes.insert({antennaOne.x, antennaOne.y});
+                uniqueAntinodes.insert({antennaTwo.x, antennaTwo.y});
+
                 int dx = antennaTwo.x - antennaOne.x;
                 int dy = antennaTwo.y - antennaOne.y;
 
@@ -67,20 +70,19 @@ int main() {
                 int antinodeTwoX = antennaTwo.x + dx;
                 int antinodeTwoY = antennaTwo.y + dy;
 
-                if (!outOfBounds(antinodeOneX, antinodeOneY)) {
-                    int distanceAntennaOne = std::abs(antennaOne.x - antinodeOneX) + std::abs(antennaOne.y - antinodeOneY);
-                    int distanceAntennaTwo = std::abs(antennaTwo.x - antinodeOneX) + std::abs(antennaTwo.y - antinodeOneY);
-                    if (distanceAntennaOne * 2 == distanceAntennaTwo) {
-                        uniqueAntinodes.insert({antinodeOneX, antinodeOneY});
-                    }
+
+                while (!outOfBounds(antinodeOneX, antinodeOneY)) {
+                    uniqueAntinodes.insert({antinodeOneX, antinodeOneY});
+
+                    antinodeOneX -= dx;
+                    antinodeOneY -= dy;
                 }
 
-                if (!outOfBounds(antinodeTwoX, antinodeTwoY)) {
-                    int distanceAntennaOne = std::abs(antennaOne.x - antinodeTwoX) + std::abs(antennaOne.y - antinodeTwoY);
-                    int distanceAntennaTwo = std::abs(antennaTwo.x - antinodeTwoX) + std::abs(antennaTwo.y - antinodeTwoY);
-                    if (distanceAntennaTwo * 2 == distanceAntennaOne) {
-                        uniqueAntinodes.insert({antinodeTwoX, antinodeTwoY});
-                    }
+                while (!outOfBounds(antinodeTwoX, antinodeTwoY)) {
+                    uniqueAntinodes.insert({antinodeTwoX, antinodeTwoY});
+
+                    antinodeTwoX += dx;
+                    antinodeTwoY += dy;
                 }
             }
         }

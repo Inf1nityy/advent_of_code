@@ -68,19 +68,11 @@ int main() {
                 int antinodeTwoY = antennaTwo.y + dy;
 
                 if (!outOfBounds(antinodeOneX, antinodeOneY)) {
-                    int distanceAntennaOne = std::abs(antennaOne.x - antinodeOneX) + std::abs(antennaOne.y - antinodeOneY);
-                    int distanceAntennaTwo = std::abs(antennaTwo.x - antinodeOneX) + std::abs(antennaTwo.y - antinodeOneY);
-                    if (distanceAntennaOne * 2 == distanceAntennaTwo) {
-                        uniqueAntinodes.insert({antinodeOneX, antinodeOneY});
-                    }
+                    uniqueAntinodes.insert({antinodeOneX, antinodeOneY});
                 }
 
                 if (!outOfBounds(antinodeTwoX, antinodeTwoY)) {
-                    int distanceAntennaOne = std::abs(antennaOne.x - antinodeTwoX) + std::abs(antennaOne.y - antinodeTwoY);
-                    int distanceAntennaTwo = std::abs(antennaTwo.x - antinodeTwoX) + std::abs(antennaTwo.y - antinodeTwoY);
-                    if (distanceAntennaTwo * 2 == distanceAntennaOne) {
-                        uniqueAntinodes.insert({antinodeTwoX, antinodeTwoY});
-                    }
+                    uniqueAntinodes.insert({antinodeTwoX, antinodeTwoY});
                 }
             }
         }
