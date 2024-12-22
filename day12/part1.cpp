@@ -26,18 +26,17 @@ bool outOfBounds(int x, int y) {
 void dfs(int i, int j, Region& region) {
     visited[i][j] = true;
     region.area++;
-    region.perimeter += 4;
 
     for (auto& offset : offsets) {
         int newI = i + offset.first;
         int newJ = j + offset.second;
 
         if (!outOfBounds(newI, newJ) && grid[newI][newJ] == region.plant) {
-            region.perimeter -= 1;
-
             if (!visited[newI][newJ]) {
                 dfs(i + offset.first, j + offset.second, region);
             }
+        } else {
+            region.perimeter++;
         }
     }
 }
