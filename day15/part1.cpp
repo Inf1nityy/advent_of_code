@@ -9,18 +9,13 @@ std::vector<std::string> grid = {};
 std::string movementInstructions = {};
 
 std::pair<int, int> getOffset(char movementInstruction) {
-	switch (movementInstruction) {
-		case '<':
-			return {0, -1};
-		case '>':
-			return {0, 1};
-		case '^':
-			return {-1, 0};
-		case 'v':
-			return {1, 0};
-	}
-
-	return {0, 0};
+    switch (movementInstruction) {
+        case '<': return {0, -1};
+        case '>': return {0, 1};
+        case '^': return {-1, 0};
+        case 'v': return {1, 0};
+    }
+    return {0, 0};
 }
 
 std::vector<std::pair<int, int>> getMovableBoxes(std::pair<int, int> boxPosition, const std::pair<int, int>& offset, std::vector<std::pair<int, int>> movableBoxes) {
