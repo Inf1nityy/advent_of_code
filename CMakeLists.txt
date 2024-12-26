@@ -11,5 +11,3 @@ foreach(subdir ${SUBDIRS})
         add_subdirectory(${subdir})
     endif()
 endforeach()
-
-add_compile_options(-Wall -Wextra -Wpedantic -std=c++20)
