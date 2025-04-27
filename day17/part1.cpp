@@ -9,8 +9,8 @@
 uint64_t registerA = 0;
 uint64_t registerB = 0;
 uint64_t registerC = 0;
-std::vector<int> program = {};
-std::vector<int> output = {};
+std::vector<int64_t> program = {};
+std::vector<int64_t> output = {};
 
 int instructionPointer = 0;
 
@@ -60,26 +60,27 @@ void executeInstruction(int opcode, int operand) {
     }
 }
 
-std::vector<int> getNumbersFromString(std::string string) {
-    std::vector<int> numbers = {};
-    std::regex pattern("\\d+");
+std::vector<int64_t> getNumbersFromString(const std::string& input) {
+    std::vector<int64_t> numbers;
+    static const std::regex pattern(R"(\d+)");
 
-    std::sregex_iterator begin(string.begin(), string.end(), pattern);
-    std::sregex_iterator end;
+    auto begin = std::sregex_iterator(input.begin(), input.end(), pattern);
+    auto end   = std::sregex_iterator();
 
-    for (std::sregex_iterator it = begin; it != end; it++) {
-        numbers.push_back(std::stoi(it->str()));
+    for (auto it = begin; it != end; ++it) {
+        numbers.push_back(std::stoll(it->str()));
     }
 
     return numbers;
 }
+
 
 int main() {
     std::ifstream puzzle_input("puzzle_input.txt");
     std::string line;
 
     while (std::getline(puzzle_input, line)) {
-        std::vector<int> numbers = getNumbersFromString(line);
+        std::vector<int64_t> numbers = getNumbersFromString(line);
 
         if (line.starts_with("Register A")) {
             registerA = numbers[0];
@@ -95,7 +96,6 @@ int main() {
     while (instructionPointer < program.size()) {
         executeInstruction(program[instructionPointer], program[instructionPointer + 1]);
     }
-
 
     for (int i = 0; i < output.size(); i++) {
         std::cout << output[i];
